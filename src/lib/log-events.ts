@@ -1,9 +1,14 @@
-const { format } = require("date-fns");
-const { v4: uuid } = require("uuid");
-const fs = require("fs");
-const path = require("path");
+import { format } from "date-fns";
+import { v4 as uuid } from "uuid";
+import fs from "fs";
+import path from "path";
+import { Request, Response, NextFunction } from "express";
 
-const logEvents = (message, logFileName) => {
+interface LogEvent {
+    message: string;
+    logFileName: string;
+}
+const logEvents = (message: string, logFileName: string) => {
     const dateTime = format(new Date(), "yyyyMMdd\tHH:mm:ss");
     const logItem = `${dateTime}\t${uuid()}\t${message}\n`;
 
@@ -21,10 +26,15 @@ const logEvents = (message, logFileName) => {
 };
 
 // Logger middleware
-const logger = (req, res, next) => {
+const logger = (
+    err: Error,
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
     logEvents(`${req.method}\t${req.url}\t${req.headers.origin}`, "reqLog.txt");
     console.log(`${req.method} ${req.path}`);
     next();
 };
 
-module.exports = { logEvents, logger };
+export { logEvents, logger };
