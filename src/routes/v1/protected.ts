@@ -8,5 +8,5 @@ protectedRoutes.use("/", authMiddleware);
 /**
  * Add protected Routes here
  */
-protectedRoutes.get("/protected/me", async (req, res) => {
+ 
 export default protectedRoutes;

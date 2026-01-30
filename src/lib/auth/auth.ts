@@ -3,8 +3,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import db from "@/src/lib/drizzle/db"; // Your drizzle db instance
 import * as schema from "@/src/lib/drizzle/schema"; // Your drizzle schema definitions
 
+const crosDomains = process.env.CORS_ALLOWED_ORIGINS
+    ? process.env.CORS_ALLOWED_ORIGINS.split(",")
+    : [];
 export const auth = betterAuth({
     basePath: "/api/v1/auth", // Match your Express routing structure
+    trustedOrigins: crosDomains,
     database: drizzleAdapter(db, {
         provider: "pg", // or "mysql", "sqlite"
         schema: {
