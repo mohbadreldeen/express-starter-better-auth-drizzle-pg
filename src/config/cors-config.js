@@ -1,11 +1,6 @@
-const allowedOrigins = [
-    /*
-     * Add your allowed origins here
-     */
-
-    "http://localhost:3000",
-    "http://localhost:5173",
-];
+const allowedOrigins = process.env.CORS_ALLOWED_ORIGINS
+    ? process.env.CORS_ALLOWED_ORIGINS.split(",")
+    : [];
 
 const corsConfig = {
     origin: (origin, callback) => {

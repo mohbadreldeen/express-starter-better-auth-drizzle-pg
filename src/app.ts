@@ -1,5 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import credentials from "@/src/middleware/credentials";
+import cors from "cors";
+import { corsConfig } from "@/src/config/cors-config";
 import cookieParser from "cookie-parser";
 import errorHandler from "@/src/middleware/error-handler";
 import v1Router from "./routes/v1/v1";
@@ -13,7 +15,7 @@ const app: Application = express();
 // Middleware
 app.use(express.json());
 app.use(credentials);
-
+app.use(cors(corsConfig));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
